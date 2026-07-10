@@ -1,0 +1,11 @@
+# pnpm settings (pnpm 10+ reads build-script allowlists from here; this is what
+# `pnpm approve-builds` writes).
+#
+# `esbuild` is pulled in transitively by the `tsx` and `vitest` devDependencies
+# and runs a postinstall script to link its prebuilt binary. pnpm 10+ blocks
+# dependency build scripts by default and exits non-zero
+# (ERR_PNPM_IGNORED_BUILDS), which fails CI/deploy. Allowlisting esbuild lets
+# the install complete. esbuild ships a prebuilt binary, so no gcc/python/make
+# system dependencies are required.
+onlyBuiltDependencies:
+  - esbuild
